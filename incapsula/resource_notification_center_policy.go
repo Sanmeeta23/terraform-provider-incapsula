@@ -295,6 +295,10 @@ func getSubAccountsDtoListFromResource(d *schema.ResourceData) []SubAccountDTO {
 func getAssetsFromResource(d *schema.ResourceData) []AssetDto {
 	var assetList []AssetDto
 	assets := d.Get("asset").(*schema.Set)
+	// Return an empty array if no assets are passed
+	if assets.Len() == 0 {
+		return assetList
+	}
 	for _, asset := range assets.List() {
 		assetResource := asset.(map[string]interface{})
 		assetDto := AssetDto{
